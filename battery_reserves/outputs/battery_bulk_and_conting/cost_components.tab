@@ -1,0 +1,10 @@
+component	npv_cost
+TotalGenFixedCosts	11109463431.13383
+FuelCostsPerPeriod	5844866643.599072
+StorageEnergyInstallCosts	0
+RFM_Fixed_Costs_Annual	0
+AESDeactivateFixedCost	0
+GenVariableOMCostsInTP	311649828.8487715
+Total_StartupGenCapacity_OM_Costs	0
+UnservedLoadPenalty	0
+UnservedReservePenalty	0

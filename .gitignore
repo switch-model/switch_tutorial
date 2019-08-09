@@ -1,0 +1,8 @@
+Icon?
+scenario_queue*/
+*.pyc
+*.log
+*.bak
+.*
+!.gitignore
+~$*

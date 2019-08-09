@@ -1,0 +1,52 @@
+# set default options for switch model
+
+# control logging and reporting
+--verbose
+--stream-solver
+--sorted-output
+
+# solver options
+# note: we have to use a pretty wide mipgap (0.01=1%) to get solutions in reasonable time
+# with discrete unit-commitment; using mipthreads=4 might also help
+# (could also specify timelimit=7200 to stop after two hours)
+#--solver=cplexamp --solver-options-string="mipgap=0.01 mipemphasis=4 nodefile=3 display=1 mipdisplay=2 threads=1 iisfind=1"
+##--solver-options-string="display=1 mipdisplay=1 threads=1 iisfind=1"
+##--suffixes iis
+## --solver=cplex --solver-io=nl
+## --solver-options-string="display=1 mipdisplay=1 iisfind=1 threads=1"
+--solver gurobi --solver-options-string 'MIPGap=0.01 threads=1'
+
+# inputs to use if not run as part of a scenario
+--inputs-dir inputs/regulation
+
+# use (only) locked-in capacity additions from PSIP
+--psip-relax
+
+# don't allow LNG conversion, same as PSIP 2016-12-23
+--force-lng-tier none
+
+# use the relaxed-split-commit method of RPS allocation (fairly fast and accurate
+# but has a bug that forces RE dispatch to equal commitment when RPS is 100%)
+# --rps-allocation relaxed_split_commit
+# switching fuel by period is also fairly fast and plausible
+--rps-allocation fuel_switch_by_period
+
+# use a relatively low amount of demand response
+--demand-response-share 0.10
+
+# use regulation and contingency reserve categories, not just "spinning"
+--contingency-reserve-type contingency
+--regulating-reserve-type regulation
+
+# get regulation and contingency reserves from DR and EVs (base case)
+--demand-response-reserve-types regulation contingency
+--ev-reserve-types regulation contingency
+
+# use Hawaii reserve rules
+--spinning-requirement-rule Hawaii
+
+# use individual units as contingencies, not whole projects (e.g., the stacked units in the new IC plants)
+--unit-contingency
+
+# smooth the dispatch schedule
+# --include-module switch_model.hawaii.smooth_dispatch --iterate-list iterate_smooth.txt
