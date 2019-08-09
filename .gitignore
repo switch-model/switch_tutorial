@@ -3,6 +3,7 @@ scenario_queue*/
 *.pyc
 *.log
 *.bak
+*.pickle
 .*
 !.gitignore
 ~$*
