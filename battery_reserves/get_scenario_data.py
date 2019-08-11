@@ -233,7 +233,7 @@ for ls_res_type in ['none', 'contingency', 'regulation']:
 # files created by our standard export script, but not needed for this tutorial
 # (used with obsolete modules or modules that are unused here)
 unused_inputs = [
-    'pumped_hydro.csv', 'hydrogen.dat', 'gen_timepoint_commit_bounds.csv',
+    'pumped_hydro.csv', 'hydrogen.csv', 'gen_timepoint_commit_bounds.csv',
     'ev_fleet_info_advanced.csv', 'ev_charging_bids.csv', 'ev_share.csv'
 ]
 

@@ -1,4 +1,4 @@
-balancing_area,period,timepoint_label,Biodiesel,Coal,Diesel,LNG,LSFO,Pellet-Biomass,MSW,SUN,WND,Battery,TotalGenSpinningReservesUp,HawaiiVarGenUpSpinningReserveRequirement,MaximumContingencyUpRequirement,marginal_cost_contingency,marginal_cost_regulation,peak_day
+balancing_area,period,timepoint_label,Biodiesel,Coal,Diesel,LNG,LSFO,Pellet-Biomass,MSW,SUN,WND,Battery,TotalGenSpinningReservesUp,HawaiiVarGenUpSpinningReserveRequirement,MaximumContingencyUpRequirement,marginal_cost_regulation,marginal_cost_contingency,peak_day
 system_wide_balancing_area,2020,2020-01-23-00:00,0,83.4999999999663,0,0,15.000000000000002,0,0.0,0.0,0.0,330.540021759,429.0400217589663,150.5904574741271,180.0,0.0,0.0,typical
 system_wide_balancing_area,2020,2020-01-23-02:00,0,113.0,0,0,15.000000000000002,0,0.0,0.0,26.80682419128,330.5400217589,485.34684595017995,150.5904574741271,180.0,0.0,0.0,typical
 system_wide_balancing_area,2020,2020-01-23-04:00,0,91.9802240021,0,0,15.000000000000002,0,0.0,0.0,0.0,330.540021759,437.5202457611,150.5904574741271,180.0,0.0,0.0,typical

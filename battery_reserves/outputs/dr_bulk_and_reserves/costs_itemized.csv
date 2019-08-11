@@ -29,7 +29,7 @@ PERIOD,Component,AnnualCost_NPV,AnnualCost_Real,Component_type
 2045,StorageEnergyInstallCosts,0.0,0.0,annual
 2045,RFM_Fixed_Costs_Annual,0.0,0.0,annual
 2045,AESDeactivateFixedCost,0.0,0.0,annual
-2020,GenVariableOMCostsInTP,87282228.51998584,21450479.941241805,timepoint
+2020,GenVariableOMCostsInTP,87282228.51998585,21450479.94124181,timepoint
 2020,Total_StartupGenCapacity_OM_Costs,0.0,0.0,timepoint
 2020,UnservedLoadPenalty,0.0,0.0,timepoint
 2020,UnservedReservePenalty,0.0,0.0,timepoint

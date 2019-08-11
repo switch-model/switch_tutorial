@@ -37,7 +37,7 @@ PERIOD,Component,AnnualCost_NPV,AnnualCost_Real,Component_type
 2025,Total_StartupGenCapacity_OM_Costs,0.0,0.0,timepoint
 2025,UnservedLoadPenalty,0.0,0.0,timepoint
 2025,UnservedReservePenalty,0.0,0.0,timepoint
-2030,GenVariableOMCostsInTP,57429710.10070633,18967935.25198061,timepoint
+2030,GenVariableOMCostsInTP,57429710.10070635,18967935.251980614,timepoint
 2030,Total_StartupGenCapacity_OM_Costs,0.0,0.0,timepoint
 2030,UnservedLoadPenalty,0.0,0.0,timepoint
 2030,UnservedReservePenalty,0.0,0.0,timepoint
