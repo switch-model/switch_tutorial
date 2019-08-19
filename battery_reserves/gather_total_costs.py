@@ -20,5 +20,7 @@ vals['cost per customer'] = vals['total cost']/460000
 # Calculate difference from baseline
 vals['savings vs baseline'] = vals.loc['battery bulk', 'cost per customer'] - vals['cost per customer']
 
-vals.to_csv(os.path.join('outputs', 'savings_per_customer.csv'))
+output_path = os.path.join('outputs', 'savings_per_customer.csv')
+vals.to_csv(output_path)
+print("Saved total cost for all scenarios in {}:".format(output_path))
 print(vals)
