@@ -54,6 +54,9 @@ agg = agg.sort_values(['scenario', 'PERIOD'])
 # to improve Excel category labeling
 agg.loc[agg['PERIOD'] != agg['PERIOD'].min(), 'scenario'] = ''
 
+# change the dummy scenario names to ' ' to create gaps in Excel
+agg.loc[agg['PERIOD'].isnull(), 'scenario'] = ' '
+
 outfile = os.path.join('outputs', 'capacity_by_tech_by_scenario.csv')
 agg.to_csv(outfile, index=False)
 print("saved {}.".format(outfile))
