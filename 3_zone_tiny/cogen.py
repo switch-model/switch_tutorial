@@ -10,26 +10,27 @@ def define_components(m):
     m.cogen_heat_rate = Param()
     m.cogen_fixed_cost = Param()
 
-    # Define a collection of valid pairs of (fuel-based generator, operating period).
-    # These are also the locations and periods where cogen capacity can exist
-    def FUEL_BASED_GEN_PERIODS_init(m):
-        valid_pairs = []
-        for g in m.FUEL_BASED_GENS:
-            for p in m.PERIODS_FOR_GEN[g]:
-                valid_pairs.append((g, p))
-        return valid_pairs
-    m.FUEL_BASED_GEN_PERIODS = Set(dimen=2, initialize=FUEL_BASED_GEN_PERIODS_init)
-
-    # note: switch_model.generators.core.dispatch already defines a
-    # FUEL_BASED_GEN_TPS set showing valid (fuel-based gen, timepoint) pairs
-
-    # Decide how much cogen capacity to have online each period and
+    # Decide how much cogen capacity to build each period and
     # how much power to produce during each timepiont
-    m.CogenCapacity = Var(
-        m.FUEL_BASED_GEN_PERIODS, within=NonNegativeReals
+    m.BuildCogen = Var(
+        m.FUEL_BASED_GENERATORS, m.PERIODS,
+        within=NonNegativeReals
     )
     m.DispatchCogen = Var(
-        m.FUEL_BASED_GEN_TPS, within=NonNegativeReals
+        m.FUEL_BASED_GENERATORS, m.TIMEPOINTS,
+        within=NonNegativeReals
+    )
+
+    # Calculate amount of cogen capacity in place at each thermal project
+    # during each period
+    def CogenCapacity_rule(m, g, p):
+        capacity = sum(
+            m.BuildCogen[g, p2] for p2 in m.PERIODS if p2 <= p
+        )
+        return capacity
+    m.CogenCapacity = Expression(
+        m.FUEL_BASED_GENERATORS, m.PERIODS,
+        within=NonNegativeReals
     )
 
     # Don't allow cogen dispatch to exceed installed capacity
@@ -37,7 +38,8 @@ def define_components(m):
         test = (m.DispatchCogen[g, t] <= m.CogenCapacity[g, m.tp_period[t]])
         return test
     m.Max_DispatchCogen = Constraint(
-        m.FUEL_BASED_GEN_TPS, rule=Max_DispatchCogen_rule
+        m.FUEL_BASED_GENERATORS, m.TIMEPOINTS,
+        rule=Max_DispatchCogen_rule
     )
 
     # Don't allow cogen heat usage to exceed available waste heat
@@ -46,8 +48,14 @@ def define_components(m):
         # When using switch_model.generators.core.no_commit, generator always
         # runs at full load heat rate; see no_commit code or
         # https://ars.els-cdn.com/content/image/1-s2.0-S2352711018301547-mmc1.pdf
-        heat_input = m.DispatchGen[g, t] * m.gen_full_load_heat_rate[g]
-        work_done = m.DispatchGen[g, t] * 3.412  # power output, converted to MMBtu
+        if g, t in m.GEN_TPS:
+            # this is a timepoint when the thermal plant can run
+            heat_input = m.DispatchGen[g, t] * m.gen_full_load_heat_rate[g]
+            work_done = m.DispatchGen[g, t] * 3.412  # power output, converted to MMBtu
+        else:
+            # thermal plant is pre-construction or retired
+            heat_input = 0
+            work_done = 0
         rule = (
             m.DispatchCogen[g, t] * m.cogen_heat_rate    # heat used by cogen
             <= heat_input - work_done                    # heat available
@@ -62,7 +70,7 @@ def define_components(m):
         total_output = sum(
             m.DispatchCogen[g, t]
             for g in m.FUEL_BASED_GENS
-            if m.gen_load_zone[g] == z and t in m.TPS_FOR_GEN[g]
+            if m.gen_load_zone[g] == z
         )
         return total_output
     m.CogenZonalOutput = Expression(
@@ -74,11 +82,7 @@ def define_components(m):
 
     # Calculate fixed costs for all cogen units online in period p
     def CogenFixedCost_rule(m, p):
-        total_capacity = sum(
-            m.CogenCapacity[g, p]
-            for g in m.FUEL_BASED_GENS
-            if p in m.PERIODS_FOR_GEN[g]
-        )
+        total_capacity = sum(m.CogenCapacity[g, p] for g in m.FUEL_BASED_GENS)
         return total_capacity * m.cogen_fixed_cost
     # Add fixed costs to model
     m.CogenFixedCost = Expression(
