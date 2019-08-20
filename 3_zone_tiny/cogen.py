@@ -86,9 +86,7 @@ def define_components(m):
         total_capacity = sum(m.CogenCapacity[g, p] for g in m.FUEL_BASED_GENS)
         return total_capacity * m.cogen_fixed_cost
     # Add fixed costs to model
-    m.CogenFixedCost = Expression(
-        m.PERIODS, rule=CogenFixedCost_rule
-    )
+    m.CogenFixedCost = Expression(m.PERIODS, rule=CogenFixedCost_rule)
     m.Cost_Components_Per_Period.append('CogenFixedCost')
 
 def load_inputs(m, switch_data, inputs_dir):
