@@ -13,11 +13,11 @@ def define_components(m):
     # Decide how much cogen capacity to build each period and
     # how much power to produce during each timepiont
     m.BuildCogen = Var(
-        m.FUEL_BASED_GENERATORS, m.PERIODS,
+        m.FUEL_BASED_GENS, m.PERIODS,
         within=NonNegativeReals
     )
     m.DispatchCogen = Var(
-        m.FUEL_BASED_GENERATORS, m.TIMEPOINTS,
+        m.FUEL_BASED_GENS, m.TIMEPOINTS,
         within=NonNegativeReals
     )
 
@@ -29,8 +29,8 @@ def define_components(m):
         )
         return capacity
     m.CogenCapacity = Expression(
-        m.FUEL_BASED_GENERATORS, m.PERIODS,
-        within=NonNegativeReals
+        m.FUEL_BASED_GENS, m.PERIODS,
+        rule=CogenCapacity_rule
     )
 
     # Don't allow cogen dispatch to exceed installed capacity
@@ -38,7 +38,7 @@ def define_components(m):
         test = (m.DispatchCogen[g, t] <= m.CogenCapacity[g, m.tp_period[t]])
         return test
     m.Max_DispatchCogen = Constraint(
-        m.FUEL_BASED_GENERATORS, m.TIMEPOINTS,
+        m.FUEL_BASED_GENS, m.TIMEPOINTS,
         rule=Max_DispatchCogen_rule
     )
 
@@ -48,7 +48,7 @@ def define_components(m):
         # When using switch_model.generators.core.no_commit, generator always
         # runs at full load heat rate; see no_commit code or
         # https://ars.els-cdn.com/content/image/1-s2.0-S2352711018301547-mmc1.pdf
-        if g, t in m.GEN_TPS:
+        if (g, t) in m.GEN_TPS:
             # this is a timepoint when the thermal plant can run
             heat_input = m.DispatchGen[g, t] * m.gen_full_load_heat_rate[g]
             work_done = m.DispatchGen[g, t] * 3.412  # power output, converted to MMBtu
@@ -62,7 +62,8 @@ def define_components(m):
         )
         return rule
     m.DispatchCogen_Available_Heat = Constraint(
-        m.FUEL_BASED_GEN_TPS, rule=DispatchCogen_Available_Heat_rule
+        m.FUEL_BASED_GENS, m.TIMEPOINTS,
+        rule=DispatchCogen_Available_Heat_rule
     )
 
     # calculate power output from cogen units in zone z in timepoint t
