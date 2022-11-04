@@ -24,6 +24,7 @@ updates = [
     ('Wind', 'Wind'),
     ('Battery_4', 'Load-Shifting Batteries'),
     ('Battery_6', 'Load-Shifting Batteries'),
+    ('Battery_Bulk', 'Load-Shifting Batteries'),
     ('Battery_Conting', 'Contingency Batteries'),
     ('Battery_Reg', 'Regulating Batteries')
 ]
@@ -47,7 +48,7 @@ agg = (
 # add dummy rows for each scenario to make gaps when plotting later
 agg = agg.reset_index()
 dummies = pd.DataFrame({'scenario': agg['scenario'].unique()})
-agg = agg.append(dummies, sort=False)
+agg = agg.concat(dummies, sort=False, axis=0)
 agg = agg.sort_values(['scenario', 'PERIOD'])
 
 # remove scenario names except for first period,
