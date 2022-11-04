@@ -1,0 +1,31 @@
+# Switch core modules
+switch_model
+switch_model.timescales
+switch_model.financials
+switch_model.balancing.load_zones
+switch_model.energy_sources.properties
+switch_model.generators.core.build
+switch_model.generators.core.dispatch
+
+# Switch either-or modules
+switch_model.energy_sources.fuel_costs.markets
+switch_model.generators.core.commit.operate
+switch_model.generators.core.commit.fuel_use
+switch_model.generators.core.commit.discrete
+switch_model.generators.extensions.storage
+
+# Optional Switch modules
+switch_model.reporting
+switch_model.generators.core.gen_discrete_build
+switch_model.balancing.operating_reserves.areas
+switch_model.balancing.operating_reserves.spinning_reserves_advanced
+
+# Hawaii-specific modules
+switch_model.hawaii.fuel_markets_expansion
+switch_model.hawaii.rps
+switch_model.hawaii.ev
+switch_model.hawaii.oahu_plants
+switch_model.hawaii.lng_conversion
+switch_model.hawaii.demand_response_simple
+switch_model.hawaii.smooth_dispatch
+switch_model.hawaii.save_results

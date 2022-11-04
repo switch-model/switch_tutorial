@@ -1,8 +1,7 @@
 component,npv_cost
-TotalGenFixedCosts,10607229202.1835
-FuelCostsPerPeriod,5391540581.558569
-StorageEnergyInstallCosts,0
+FuelCostsPerPeriod,5233720514.690103
+GenVariableOMCostsInTP,1329194052.584186
 RFM_Fixed_Costs_Annual,0
-AESDeactivateFixedCost,0
-GenVariableOMCostsInTP,298356846.7442267
+StorageEnergyFixedCost,713920889.4183114
+TotalGenFixedCosts,11203256596.09959
 Total_StartupGenCapacity_OM_Costs,0

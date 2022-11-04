@@ -30,7 +30,7 @@ scenario_dict_list = [dict(zip(scenario_columns, scen)) for scen in scenarios]
 #import pdb; pdb.set_trace()
 
 scenario_list = [
-    '--scenario-name {scenario_name}_long --outputs-dir outputs/{scenario_name} '
+    '--scenario-name {scenario_name} --outputs-dir outputs/{scenario_name} '
     '--inputs-dir inputs/{ls_bat_reserve_type} '
     '--demand-response-share {dr_share} --ev-timing {ev_timing} '
     '--demand-response-reserve-types {dr_res_types} --ev-reserve-types {dr_res_types}'
@@ -61,24 +61,27 @@ args = dict(
     # '2020_2025' is two 5-year periods, with 24 days per period, starting in 2020 and 2025
     # "2020_2045_23_2_2" is 5 5-year periods, 6 days per period before 2045, 12 days per period in 2045, 12 h/day
     # time_sample = "2020_2045_23_2_2", # 6 mo/year before 2045
-    time_sample = "2020_2045_23_2",  # 12 mo/year all the way through
+    # time_sample = "2020_2045_23_2",  # 12 mo/year all the way through
+    time_sample="k_means_daily_5_12+_2",  # representative days, 5-year periods, 12+tough sample days per period, 2-hour spacing
     # subset of load zones to model
     load_zones = ('Oahu',),
     # "hist"=pseudo-historical, "med"="Moved by Passion", "flat"=2015 levels, "PSIP_2016_04"=PSIP 4/16
-    load_scen_id = "PSIP_2016_12",
+    load_scenario = "IGP_2020_03",
     # "PSIP_2016_12"=PSIP 12/16 or "PSIP_2016_12_flat"=unchanged after 2017
-    tech_scen_id='PSIP_2016_12',
+    tech_scenario='ATB_2020_mid',
     # '1'=low, '2'=high, '3'=reference, 'EIA_ref'=EIA-derived reference level, 'hedged'=2020-2030 prices from Hawaii Gas
-    fuel_scen_id='unhedged_2016_11_22',
+    fuel_scenario='AEO_2020_Reference',
     # note: 'unhedged_2016_11_22' is basically the same as 'PSIP_2016_09', but derived directly from EIA and includes various LNG options
     # Blazing a Bold Frontier, Stuck in the Middle, No Burning Desire, Full Adoption,
     # Business as Usual, (omitted or None=none)
-    ev_scenario = 'PSIP 2016-12',
+    ev_scenario = 'IGP 2020',
+    ev_charge_profile = 'EoT_2018_avg',
     # should the must_run flag be converted to set minimum commitment for existing plants?
     enable_must_run = 0,
     # list of technologies to exclude (currently CentralFixedPV, because we don't have the logic
     # in place yet to choose between CentralFixedPV and CentralTrackingPV at each site)
-    exclude_technologies = ('CentralFixedPV', 'Lake_Wilson'),
+    # We also exclude DistBattery because it's identical to Battery_Bulk
+    exclude_technologies = ('CentralFixedPV', 'Lake_Wilson', 'DistBattery'),
     base_financial_year = 2016,
     interest_rate = 0.06,
     discount_rate = 0.03,
@@ -88,7 +91,7 @@ args = dict(
     # should be a list of tuples of (technology, reserve_type); if not specified, we assume
     # each technology can provide all types of reserves; reserve_type should be "none",
     # "contingency" or "reserve"
-    max_reserve_capability=[('Battery_4', 'regulation'), ('Battery_6', 'regulation'), ('Battery_Conting', 'contingency')],
+    max_reserve_capability=[('Battery_Bulk', 'regulation'), ('Battery_4', 'regulation'), ('Battery_6', 'regulation'), ('Battery_Conting', 'contingency')],
 )
 
 # # battery data from 2016-12-23 PSIP report (pp. J-87 - J-88)
@@ -222,7 +225,7 @@ alt_args = [
 for ls_res_type in ['none', 'contingency', 'regulation']:
     caps = []
     for (b, rt) in args['max_reserve_capability']:
-        if b in {'Battery_4', 'Battery_6'}:
+        if b in {'Battery_Bulk', 'Battery_4', 'Battery_6'}:
             rt = ls_res_type
         caps.append((b, rt))
     alt_args.append(dict(
@@ -240,7 +243,7 @@ unused_inputs = [
 for a in alt_args:
     active_args = args.copy()
     active_args.update(a)
-    scenario_data.write_tables(**active_args)
+    scenario_data.write_tables(active_args)
     for f in unused_inputs:
         f_path = os.path.join(
             active_args['inputs_dir'], active_args.get('inputs_subdir', ''), f

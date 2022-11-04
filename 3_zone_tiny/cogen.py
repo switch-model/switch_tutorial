@@ -92,5 +92,4 @@ def define_components(m):
 def load_inputs(m, switch_data, inputs_dir):
     switch_data.load_aug(
         filename=os.path.join(inputs_dir, 'cogen.csv'),
-        autoselect=True,
         param=(m.cogen_heat_rate, m.cogen_fixed_cost))

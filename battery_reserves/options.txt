@@ -19,9 +19,6 @@
 # inputs to use if not run as part of a scenario
 --inputs-dir inputs/regulation
 
-# use (only) locked-in capacity additions from PSIP
---psip-relax
-
 # don't allow LNG conversion, same as PSIP 2016-12-23
 --force-lng-tier none
 
