@@ -1,4 +1,11 @@
 TRANS_TIMEPOINTS_1,TRANS_TIMEPOINTS_2,TRANS_TIMEPOINTS_3,TxPowerReceived
+North,Central,1,0.0
+North,Central,2,3.5957753864201565
+North,Central,3,0.0
+North,Central,4,0.0
+North,Central,5,0.0
+North,Central,6,0.0
+North,Central,7,0.0
 Central,North,1,2.6192502954065473
 Central,North,2,5.308883447179564
 Central,North,3,2.0912671908658944
@@ -13,13 +20,6 @@ Central,South,4,7.6198700712992204
 Central,South,5,5.54198742265048
 Central,South,6,7.653919840813093
 Central,South,7,11.087645195353717
-North,Central,1,0.0
-North,Central,2,3.5957753864201565
-North,Central,3,0.0
-North,Central,4,0.0
-North,Central,5,0.0
-North,Central,6,0.0
-North,Central,7,0.0
 South,Central,1,3.0940838071876087
 South,Central,2,6.205526542877505
 South,Central,3,3.8068458785264077

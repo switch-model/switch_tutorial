@@ -1,7 +1,9 @@
 {
     "options": {
         "skip_generic_output": false,
-        "save_expressions": [],
+        "save_expressions": [
+            "all"
+        ],
         "log_run_to_file": false,
         "logs_dir": "logs",
         "log_level": "warning",

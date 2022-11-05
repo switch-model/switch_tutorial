@@ -1,11 +1,4 @@
 ZoneTotalDistributedDispatch_index_1,ZoneTotalDistributedDispatch_index_2,ZoneTotalDistributedDispatch
-Central,1,0.0
-Central,2,0.0
-Central,3,0.0
-Central,4,0.0
-Central,5,0.0
-Central,6,0.0
-Central,7,0.0
 North,1,0.0
 North,2,0.0
 North,3,0.0
@@ -13,6 +6,13 @@ North,4,0.0
 North,5,0.0
 North,6,0.0
 North,7,0.0
+Central,1,0.0
+Central,2,0.0
+Central,3,0.0
+Central,4,0.0
+Central,5,0.0
+Central,6,0.0
+Central,7,0.0
 South,1,0.0
 South,2,0.0
 South,3,0.0
